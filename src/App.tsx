@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Spin } from "antd";
+import React, { lazy, Suspense } from "react";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
+import "./index.scss";
 
-function App() {
+const Users = lazy(() => import("./pages/users"));
+const Interests = lazy(() => import("./pages/interests"));
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <main className="container">
+      <Router>
+        <Suspense
+          fallback={<Spin tip="Loading..." size="large" className="spinner" />}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Switch>
+            <Route exact path="/" render={() => <Users />} />
+            <Route path="/:id/interests/" render={() => <Interests />} />
+
+            <Route path="*" render={() => <Redirect to="/" />} />
+          </Switch>
+        </Suspense>
+      </Router>
+    </main>
   );
-}
+};
 
 export default App;
