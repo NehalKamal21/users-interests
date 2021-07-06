@@ -9,7 +9,7 @@ const initialState = {
 
 interface ActionInterface {
   type: string;
-  payload: UsersInterface;
+  payload: any;
 }
 
 interface UsersInterface {
