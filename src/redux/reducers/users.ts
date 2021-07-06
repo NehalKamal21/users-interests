@@ -9,7 +9,7 @@ const initialState = {
 
 interface ActionInterface {
   type: string;
-  payload: any;
+  payload: UsersInterface;
 }
 
 interface UsersInterface {
@@ -17,15 +17,28 @@ interface UsersInterface {
   interests: any[];
 }
 
+const calCulateFollowers = (usersList: UserInterface[]) => {
+  return usersList.map((user: UserInterface) => {
+    let followers = 0;
+    followers = _.filter(usersList, (Filtereduser) => Filtereduser.following.indexOf(parseInt(user.id)) > -1).length;
+    return {
+      ...user,
+      followers
+    }
+  });
+}
+
 const usersReducer = (state: UsersInterface = initialState, action: ActionInterface) => {
 
   switch (action.type) {
     case CONST.FETCH_USERS: {
       const { users } = action.payload;
+      const updatedUser = calCulateFollowers(users)
+
       return {
         ...state,
-        users: _.orderBy(users, ['user', function (o) {
-          return o.following.length;
+        users: _.orderBy(updatedUser, ['user', function (o) {
+          return o.followers;
         }], ["asc", "asc"])
       }
     }
@@ -40,13 +53,14 @@ const usersReducer = (state: UsersInterface = initialState, action: ActionInterf
     case CONST.DELETEUSER: {
       const { userId } = action.payload;
       const { users } = state;
-      const updatedUser = _.remove(users, function (n) {
+      const removedUser = _.remove(users, function (n) {
         return (n.id.toString() !== userId);
       })
+      const updatedUsers = calCulateFollowers(removedUser);
 
       return {
         ...state,
-        users: updatedUser,
+        users: updatedUsers,
       }
     }
 

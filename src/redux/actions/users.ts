@@ -1,8 +1,9 @@
 import * as CONST from '../constants';
 import axios from 'axios';
+import { UsersInterface } from '../constants';
 
 const fetchUsers = () => (dispatch: any): void => {
-  axios.get("/users.json", {
+  axios.get<UsersInterface[]>("/users.json", {
     responseType: 'json',
     headers: {
       "Accept": "application/json; odata=verbose"
@@ -50,6 +51,6 @@ const ondeleteUser = (userId: string) => (dispatch: any): void => {
 export {
   fetchUsers,
   fetchInterests,
-  deleteUserInterest, 
+  deleteUserInterest,
   ondeleteUser
 }

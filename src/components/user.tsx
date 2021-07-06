@@ -4,7 +4,7 @@ import { DeleteOutlined } from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
 
 const User = (props: any) => {
-  const { name, following, id, onDeleteUser, interests } = props;
+  const { name, following, id, onDeleteUser, interests, followers } = props;
   const { Meta } = Card;
 
   return (
@@ -15,7 +15,7 @@ const User = (props: any) => {
         interests ? <NavLink to={`${id}/interests`}>Interests</NavLink> : null,
       ]}
     >
-      <Meta title={name} description={<p>Following: {following.length}</p>} />
+      <Meta title={name} description={<p>Followers: {followers}</p>} />
     </Card>
   );
 };

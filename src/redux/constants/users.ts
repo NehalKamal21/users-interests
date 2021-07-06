@@ -8,6 +8,7 @@ export interface UserInterface {
     following: number[];
     id: string;
     interests: number[];
+    followers: number;
 }
 
 export interface UsersInterface {

@@ -22,6 +22,7 @@ const Users = (props: any) => {
           name={user.name}
           following={user.following}
           id={user.id}
+          followers={user.followers}
           interests={user.interests}
           onDeleteUser={handleDeleteUser}
         />
